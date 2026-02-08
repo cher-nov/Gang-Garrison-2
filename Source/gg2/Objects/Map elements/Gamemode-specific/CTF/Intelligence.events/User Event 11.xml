@@ -13,10 +13,10 @@
       <not>false</not>
       <appliesTo>.self</appliesTo>
       <arguments>
-        <argument kind="STRING">receiveCompleteMessage(global.serverSocket, 6, global.deserializeBuffer);
-x = read_ushort(global.deserializeBuffer)/5;
-y = read_ushort(global.deserializeBuffer)/5;
-alarm[0] = read_short(global.deserializeBuffer)/global.delta_factor;
+        <argument kind="STRING">receiveCompleteMessage(global.serverSocket, 6);
+x = read_ushort(global.serverSocket)/5;
+y = read_ushort(global.serverSocket)/5;
+alarm[0] = read_short(global.serverSocket)/global.delta_factor;
 </argument>
       </arguments>
     </action>

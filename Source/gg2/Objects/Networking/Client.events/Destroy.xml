@@ -16,7 +16,6 @@
         <argument kind="STRING">if(not nocreate) {
     socket_destroy(global.serverSocket);
     ds_list_destroy(global.players);
-    buffer_destroy(global.deserializeBuffer);
     buffer_destroy(downloadMapBuffer);
     
     with(Player)

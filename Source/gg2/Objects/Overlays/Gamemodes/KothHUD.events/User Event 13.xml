@@ -13,10 +13,10 @@
       <not>false</not>
       <appliesTo>.self</appliesTo>
       <arguments>
-        <argument kind="STRING">receiveCompleteMessage(global.serverSocket,6,global.deserializeBuffer);
-cpUnlock=read_ushort(global.deserializeBuffer);
-redTimer=read_ushort(global.deserializeBuffer);
-blueTimer=read_ushort(global.deserializeBuffer);
+        <argument kind="STRING">receiveCompleteMessage(global.serverSocket, 6);
+cpUnlock = read_ushort(global.serverSocket);
+redTimer = read_ushort(global.serverSocket);
+blueTimer = read_ushort(global.serverSocket);
 with KothControlPoint event_user(13);
 if cpUnlock == 0 &amp;&amp; KothControlPoint.locked {
     doEventUnlockCP();

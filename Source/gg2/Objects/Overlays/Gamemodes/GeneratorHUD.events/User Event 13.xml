@@ -13,10 +13,10 @@
       <not>false</not>
       <appliesTo>.self</appliesTo>
       <arguments>
-        <argument kind="STRING">receiveCompleteMessage(global.serverSocket,5,global.deserializeBuffer);
-global.timeLimitMins = read_ubyte(global.deserializeBuffer);
-timeLimit=global.timeLimitMins*30*60;
-timer=read_uint(global.deserializeBuffer);
+        <argument kind="STRING">receiveCompleteMessage(global.serverSocket, 5);
+global.timeLimitMins = read_ubyte(global.serverSocket);
+timeLimit = global.timeLimitMins*30*60;
+timer = read_uint(global.serverSocket);
 with GeneratorBlue event_user(13);
 with GeneratorRed event_user(13);
 </argument>

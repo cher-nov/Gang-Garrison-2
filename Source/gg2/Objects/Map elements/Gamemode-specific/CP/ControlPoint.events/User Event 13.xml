@@ -13,10 +13,10 @@
       <not>false</not>
       <appliesTo>.self</appliesTo>
       <arguments>
-        <argument kind="STRING">receiveCompleteMessage(global.serverSocket,4,global.deserializeBuffer);
-temp = read_byte(global.deserializeBuffer);
-cappingTeam = read_byte(global.deserializeBuffer);
-capping = read_ushort(global.deserializeBuffer);
+        <argument kind="STRING">receiveCompleteMessage(global.serverSocket, 4);
+temp = read_byte(global.serverSocket);
+cappingTeam = read_byte(global.serverSocket);
+capping = read_ushort(global.serverSocket);
 if team != temp {
     pointCapture(cp);
     team = temp;
