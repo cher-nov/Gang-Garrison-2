@@ -20,6 +20,7 @@
     
     write_ubyte(argument1, ds_list_size(global.players));
     
+    // this variable is supposed ONLY for serialization events ("User Defined" 12 & 10)
     global.serializeBuffer = argument1;
 
     if argument0 != CAPS_UPDATE {
