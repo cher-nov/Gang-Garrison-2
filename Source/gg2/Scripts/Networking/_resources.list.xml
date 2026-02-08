@@ -2,6 +2,7 @@
 <resources>
   <resource name="receiveCompleteMessage" type="RESOURCE"/>
   <resource name="receiveString" type="RESOURCE"/>
-  <resource name="read_binstring" type="RESOURCE"/>
-  <resource name="write_binstring" type="RESOURCE"/>
+  <resource name="writePrefixedString1" type="RESOURCE"/>
+  <resource name="writePrefixedString2" type="RESOURCE"/>
+  <resource name="writeTerminatedString" type="RESOURCE"/>
 </resources>

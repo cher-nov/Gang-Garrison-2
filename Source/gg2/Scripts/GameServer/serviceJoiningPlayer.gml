@@ -68,7 +68,7 @@ case STATE_EXPECT_MESSAGELEN:
     break;
 
 case STATE_EXPECT_PASSWORD:
-    if(read_string(socket, expectedBytes) == global.serverPassword)
+    if(read_binary_string(socket, expectedBytes) == global.serverPassword)
     {
         newState = STATE_CLIENT_AUTHENTICATED;
         expectedBytes = 0;
@@ -79,16 +79,12 @@ case STATE_EXPECT_PASSWORD:
 
 case STATE_CLIENT_AUTHENTICATED:
     write_ubyte(socket, HELLO);
-    write_ubyte(socket, string_length(global.serverName));
-    write_string(socket, global.serverName);
-    write_ubyte(socket, string_length(global.currentMap));
-    write_string(socket, global.currentMap);
-    write_ubyte(socket, string_length(global.currentMapMD5));
-    write_string(socket, global.currentMapMD5);
+    writePrefixedString1(socket, global.serverName);
+    writePrefixedString1(socket, global.currentMap);
+    writePrefixedString1(socket, global.currentMapMD5);
     
     write_ubyte(socket, global.serverPluginsRequired);
-    write_ushort(socket, string_length(GameServer.pluginList));
-    write_string(socket, GameServer.pluginList);
+    writePrefixedString2(socket, GameServer.pluginList);
     
     advertisedMap = global.currentMap;
     advertisedMapMd5 = global.currentMapMD5;
@@ -172,8 +168,8 @@ case STATE_EXPECT_NAME:
         
     occupiesSlot = true;
 
-    name = read_string(socket, expectedBytes);
-    name = string_copy(name, 0, MAX_PLAYERNAME_LENGTH);
+    name = read_binary_string(socket, expectedBytes);
+    name = string_copy(name, 1, MAX_PLAYERNAME_LENGTH);
     
     write_ubyte(socket, RESERVE_SLOT);
     

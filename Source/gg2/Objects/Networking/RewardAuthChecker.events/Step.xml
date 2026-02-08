@@ -45,7 +45,7 @@ else
     if(!socket_has_error(socket) and instance_exists(currentPlayer) and buffer_size(responseBuffer)&gt;0)
     {
         var rewards;
-        rewards = read_string(responseBuffer, buffer_size(responseBuffer));
+        rewards = read_binary_string(responseBuffer, buffer_size(responseBuffer));
         rewardAuthSuccess(currentPlayer, rewards);
     }
     

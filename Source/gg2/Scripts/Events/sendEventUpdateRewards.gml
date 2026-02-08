@@ -7,5 +7,4 @@
 
 write_ubyte(global.sendBuffer, REWARD_UPDATE);
 write_ubyte(global.sendBuffer, ds_list_find_index(global.players,argument0));
-write_ushort(global.sendBuffer, string_length(argument1));
-write_string(global.sendBuffer, argument1);
+writePrefixedString2(global.sendBuffer, argument1);

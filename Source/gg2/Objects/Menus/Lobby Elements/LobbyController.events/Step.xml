@@ -50,7 +50,7 @@
                     server.protocol = read_ubyte(lobbysocket);
                     server.port = read_ushort(lobbysocket);
                     server.ip = string(read_ubyte(lobbysocket))+"."+string(read_ubyte(lobbysocket))+"."+string(read_ubyte(lobbysocket))+"."+string(read_ubyte(lobbysocket));
-                    read_string(lobbysocket, 2+16);
+                    read_binary_string(lobbysocket, 2+16);
                     server.slots = read_ushort(lobbysocket);
                     server.players = read_ushort(lobbysocket);
                     server.bots = read_ushort(lobbysocket);
@@ -59,7 +59,7 @@
                     repeat(infolen)
                     {
                         var key, val;
-                        key = read_string(lobbysocket, read_ubyte(lobbysocket));
+                        key = read_binary_string(lobbysocket, read_ubyte(lobbysocket));
                         if(key=="protocol_id")
                         {
                             buffer_set_readpos(global.protocolUuid, 0);
@@ -70,7 +70,7 @@
                         }
                         else
                         {
-                            val = read_string(lobbysocket, read_ushort(lobbysocket));
+                            val = read_binary_string(lobbysocket, read_ushort(lobbysocket));
                             ds_map_add(server.infos, key, val);
                         }
                     }

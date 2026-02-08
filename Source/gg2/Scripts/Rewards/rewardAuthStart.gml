@@ -20,10 +20,10 @@ if(ds_queue_size(RewardAuthChecker.workQueue) > 50) exit;
 authbuffer = buffer_create();
 parseUuid("205e2d84-4833-89d4-15d9-c0249667df1c", authbuffer);
 write_ushort(authbuffer, string_length(answer)+string_length(challenge)+1+string_length(rewardId));
-write_binstring(authbuffer, answer);
-write_binstring(authbuffer, challenge);
+write_binary_string(authbuffer, answer);
+write_binary_string(authbuffer, challenge);
 write_ubyte(authbuffer, ipCheck);
-write_string(authbuffer, rewardId);
+write_binary_string(authbuffer, rewardId);
 
 // Enqueue the check
 item = ds_list_create();

@@ -82,34 +82,34 @@ with (client)
     // elements are separated by SP characters. No CR or LF is allowed
     // except in the final CRLF sequence."
     if (ds_map_exists(parsed, 'query'))
-        write_string(socket, requestMethod + ' ' + ds_map_find_value(parsed, 'abs_path') + '?' + ds_map_find_value(parsed, 'query') + ' HTTP/1.1' + CRLF);
+        writeTerminatedString(socket, requestMethod + ' ' + ds_map_find_value(parsed, 'abs_path') + '?' + ds_map_find_value(parsed, 'query') + ' HTTP/1.1', CRLF);
     else
-        write_string(socket, requestMethod + ' ' + ds_map_find_value(parsed, 'abs_path') + ' HTTP/1.1' + CRLF);
+        writeTerminatedString(socket, requestMethod + ' ' + ds_map_find_value(parsed, 'abs_path') + ' HTTP/1.1', CRLF);
 
     // "A client MUST include a Host header field in all HTTP/1.1 request
     // messages."
     // "A "host" without any trailing port information implies the default
     // port for the service requested (e.g., "80" for an HTTP URL)."
     if (ds_map_find_value(parsed, 'port') == 80)
-        write_string(socket, 'Host: ' + ds_map_find_value(parsed, 'host') + CRLF);
+        writeTerminatedString(socket, 'Host: ' + ds_map_find_value(parsed, 'host'), CRLF);
     else
-        write_string(socket, 'Host: ' + ds_map_find_value(parsed, 'host')
-            + ':' + string(ds_map_find_value(parsed, 'port')) + CRLF);
+        writeTerminatedString(socket, 'Host: ' + ds_map_find_value(parsed, 'host')
+            + ':' + string(ds_map_find_value(parsed, 'port')), CRLF);
 
     // "An HTTP/1.1 server MAY assume that a HTTP/1.1 client intends to
     // maintain a persistent connection unless a Connection header including
     // the connection-token "close" was sent in the request."
-    write_string(socket, 'Connection: close' + CRLF);
+    writeTerminatedString(socket, 'Connection: close', CRLF);
 
     // "If no Accept-Encoding field is present in a request, the server MAY
     // assume that the client will accept any content coding."
-    write_string(socket, 'Accept-Encoding:' + CRLF);
+    writeTerminatedString(socket, 'Accept-Encoding:', CRLF);
 
     // Request body meta data
     if (requestBody)
     {
-        write_string(socket, 'Content-Length: ' + string(buffer_size(requestBody)) + CRLF);
-        write_string(socket, 'Content-Type: ' + requestBodyMimeType + CRLF);
+        writeTerminatedString(socket, 'Content-Length: ' + string(buffer_size(requestBody)), CRLF);
+        writeTerminatedString(socket, 'Content-Type: ' + requestBodyMimeType, CRLF);
     }
         
     // If headers specified
@@ -119,12 +119,12 @@ with (client)
         // Iterate over headers map
         for (key = ds_map_find_first(headers); is_string(key); key = ds_map_find_next(headers, key))
         {
-            write_string(socket, key + ': ' + ds_map_find_value(headers, key) + CRLF);
+            writeTerminatedString(socket, key + ': ' + ds_map_find_value(headers, key), CRLF);
         }
     }
     
     // Send extra CRLF to terminate request
-    write_string(socket, CRLF);
+    writeTerminatedString(socket, CRLF);
     
     // Request body itself
     if (requestBody)

@@ -165,8 +165,7 @@ do {
                 var rewardId;
                 rewardId = string_copy(global.rewardId, 0, 255);
                 write_ubyte(global.serverSocket, REWARD_REQUEST);
-                write_ubyte(global.serverSocket, string_length(rewardId));
-                write_string(global.serverSocket, rewardId);
+                writePrefixedString1(global.serverSocket, rewardId);
             }
             if(global.queueJumping == true)
             {
@@ -412,8 +411,7 @@ do {
         case PASSWORD_REQUEST:
             if(!usePreviousPwd)
                 global.clientPassword = get_string("Enter Password:", "");
-            write_ubyte(global.serverSocket, string_length(global.clientPassword));
-            write_string(global.serverSocket, global.clientPassword);
+            writePrefixedString1(global.serverSocket, global.clientPassword);
             socket_send(global.serverSocket);
             break;
 
@@ -553,11 +551,11 @@ do {
         case REWARD_CHALLENGE_CODE:
             var challengeData;
             receiveCompleteMessage(global.serverSocket, 16);
-            challengeData = read_binstring(global.serverSocket, socket_receivebuffer_size(global.serverSocket));
+            challengeData = read_binary_string(global.serverSocket, socket_receivebuffer_size(global.serverSocket));
             challengeData += socket_remote_ip(global.serverSocket);
 
             write_ubyte(global.serverSocket, REWARD_CHALLENGE_RESPONSE);
-            write_binstring(global.serverSocket, hmac_md5_bin(global.rewardKey, challengeData));
+            write_binary_string(global.serverSocket, hmac_md5_bin(global.rewardKey, challengeData));
             socket_send(global.serverSocket);
             break;
 

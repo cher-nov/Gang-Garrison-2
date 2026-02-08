@@ -1,9 +1,7 @@
-// argument0 - mapname
-// argument1 - mapmd5
+// argument0 - map name
+// argument1 - map md5
 // argument2 - buffer
 
 write_ubyte(argument2, CHANGE_MAP);
-write_ubyte(argument2, string_length(argument0));
-write_string(argument2, argument0);
-write_ubyte(argument2, string_length(argument1));
-write_string(argument2, argument1);
+writePrefixedString1(argument2, argument0);
+writePrefixedString1(argument2, argument1);

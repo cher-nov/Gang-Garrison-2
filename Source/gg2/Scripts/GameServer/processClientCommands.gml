@@ -294,11 +294,10 @@ while(commandLimitRemaining > 0) {
                         if(current_time - lastNamechange < 1000)
                             break;
                     lastNamechange = current_time;
-                    name = read_string(socket, nameLength);
+                    name = read_binary_string(socket, nameLength);
                     write_ubyte(global.sendBuffer, PLAYER_CHANGENAME);
                     write_ubyte(global.sendBuffer, playerId);
-                    write_ubyte(global.sendBuffer, string_length(name));
-                    write_string(global.sendBuffer, name);
+                    writePrefixedString1(global.sendBuffer, name);
                 }
             }
             break;
@@ -318,16 +317,16 @@ while(commandLimitRemaining > 0) {
             break;
         
         case REWARD_REQUEST:
-            player.rewardId = read_string(socket, socket_receivebuffer_size(socket));
+            player.rewardId = read_binary_string(socket, socket_receivebuffer_size(socket));
             player.challenge = rewardCreateChallenge();
             
             write_ubyte(socket, REWARD_CHALLENGE_CODE);
-            write_binstring(socket, player.challenge);
+            write_binary_string(socket, player.challenge);
             break;
             
         case REWARD_CHALLENGE_RESPONSE:
             var answer, i, authbuffer;
-            answer = read_binstring(socket, 16);
+            answer = read_binary_string(socket, 16);
             
             with(player)
                 if(variable_local_exists("challenge") and variable_local_exists("rewardId"))

@@ -16,10 +16,7 @@ write_ushort(lobbyBuffer, global.hostingPort);
 write_ushort(lobbyBuffer, global.playerLimit);
 write_ushort(lobbyBuffer, noOfOccupiedSlots);
 write_ushort(lobbyBuffer, 0); // Number of bots
-if(global.serverPassword != "")
-    write_ushort(lobbyBuffer, 1);
-else
-    write_ushort(lobbyBuffer, 0);
+write_ushort(lobbyBuffer, global.serverPassword != "");
 
 write_ushort(lobbyBuffer, 7); // Number of Key/Value pairs that follow
 writeKeyValue(lobbyBuffer, "name", global.serverName);
@@ -28,8 +25,7 @@ writeKeyValue(lobbyBuffer, "game_short", "gg2");
 writeKeyValue(lobbyBuffer, "game_ver", GAME_VERSION_STRING);
 writeKeyValue(lobbyBuffer, "game_url", GAME_URL_STRING);
 writeKeyValue(lobbyBuffer, "map", global.currentMap);
-write_ubyte(lobbyBuffer, string_length("protocol_id"));
-write_string(lobbyBuffer, "protocol_id");
+writePrefixedString1(lobbyBuffer, "protocol_id");
 write_ushort(lobbyBuffer, 16);
 write_buffer(lobbyBuffer, global.protocolUuid);
 

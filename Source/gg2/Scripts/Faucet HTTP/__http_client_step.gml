@@ -52,7 +52,7 @@ with (client)
         var bytesRead, c;
         for (bytesRead = 1; bytesRead <= available; bytesRead += 1)
         {
-            c = read_string(socket, 1);
+            c = read_binary_string(socket, 1);
             // Reached end of line
             // "HTTP/1.1 defines the sequence CR LF as the end-of-line marker for all
             // protocol elements except the entity-body (see appendix 19.3 for
@@ -143,7 +143,7 @@ with (client)
                         // Read chunk size byte by byte 
                         while (buffer_bytes_left(responseBody))
                         {
-                            c = read_string(responseBody, 1);
+                            c = read_binary_string(responseBody, 1);
                             if (c == CR or c == ';')
                                 break;
                             else
@@ -156,13 +156,13 @@ with (client)
                             // skip all extension stuff
                             while (buffer_bytes_left(responseBody) && c != CR)
                             {
-                                c = read_string(responseBody, 1);
+                                c = read_binary_string(responseBody, 1);
                             }
                         }
                         // Reached end of header
                         if (c == CR)
                         {
-                            c += read_string(responseBody, 1);
+                            c += read_binary_string(responseBody, 1);
                             // Doesn't end in CRLF
                             if (c != CRLF)
                             {
@@ -200,7 +200,7 @@ with (client)
                             write_buffer_part(actualResponseBody, responseBody, chunkSize);
                             actualResponseBodySize += chunkSize;
                             // Check for CRLF
-                            if (read_string(responseBody, 2) != CRLF)
+                            if (read_binary_string(responseBody, 2) != CRLF)
                             {
                                 errored = true;
                                 error = 'chunk did not end in CRLF in a chunked transfer';
@@ -227,13 +227,13 @@ with (client)
                                 linebuf = '';
                                 while (buffer_bytes_left(responseBody))
                                 {
-                                    c = read_string(responseBody, 1);
+                                    c = read_binary_string(responseBody, 1);
                                     if (c != CR)
                                         linebuf += c;
                                     else
                                         break;
                                 }
-                                c += read_string(responseBody, 1);
+                                c += read_binary_string(responseBody, 1);
                                 if (c != CRLF)
                                 {
                                     errored = true;

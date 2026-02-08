@@ -86,8 +86,7 @@ if(global.winners != -1 and !global.mapchanging)
     impendingMapChange = 300; // in 300 ticks (ten seconds), we'll do a map change
     
     write_ubyte(global.sendBuffer, MAP_END);
-    write_ubyte(global.sendBuffer, string_length(global.nextMap));
-    write_string(global.sendBuffer, global.nextMap);
+    writePrefixedString1(global.sendBuffer, global.nextMap);
     write_ubyte(global.sendBuffer, global.winners);
     write_ubyte(global.sendBuffer, global.currentMapArea);
     

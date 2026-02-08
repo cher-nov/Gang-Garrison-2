@@ -28,10 +28,7 @@
         write_ubyte(global.serializeBuffer, stats[BONUS]);
         write_ubyte(global.serializeBuffer, stats[POINTS]);
         write_ubyte(global.serializeBuffer, queueJump);
-        var unparsed;
-        unparsed = unparseRewards(rewards);
-        write_ushort(global.serializeBuffer, string_length(unparsed));
-        write_string(global.serializeBuffer, unparsed);
+        writePrefixedString2(global.serializeBuffer, unparseRewards(rewards));
         
         // Serialize the domination kill table by sending the number of kills for each
         // player except self
