@@ -47,8 +47,7 @@
     window_set_region_scale(-1, false);
     
     ini_open("gg2.ini");
-    global.playerName = ini_read_string("Settings", "PlayerName", "Player");
-    global.playerName = string_copy(global.playerName, 0, min(string_length(global.playerName), MAX_PLAYERNAME_LENGTH));
+    global.playerName = string_copy(ini_read_string("Settings", "PlayerName", "Player"), 1, MAX_PLAYERNAME_LENGTH);
     global.fullscreen = ini_read_real("Settings", "Fullscreen", 0);
     global.useLobbyServer = ini_read_real("Settings", "UseLobby", 1);
     global.hostingPort = ini_read_real("Settings", "HostingPort", 8190);

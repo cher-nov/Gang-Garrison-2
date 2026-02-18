@@ -51,12 +51,12 @@ colonPos = string_pos(':', url);
 if (colonPos == 0)
     return -1;
 ds_map_add(map, 'scheme', string_copy(url, 1, colonPos - 1));
-url = string_copy(url, colonPos + 1, string_length(url) - colonPos);
+url = string_delete(url, 1, colonPos);
 
 // before double slash
 // remove slashes (yes this will screw up file:// but who cares)
 while (string_char_at(url, 1) == '/')
-    url = string_copy(url, 2, string_length(url) - 1);
+    url = string_delete(url, 1, 1);
 
 // before hostname
 var slashPos, colonPos;
@@ -86,7 +86,7 @@ if (colonPos == 0)
     else
     {
         ds_map_add(map, 'host', string_copy(url, 1, slashPos - 1));
-        url = string_copy(url, slashPos, string_length(url) - slashPos + 1);
+        url = string_delete(url, 1, slashPos - 1);
     }
 }
 // There's a colon - port specified
@@ -96,17 +96,17 @@ else
     if (slashPos == 0)
     {
         ds_map_add(map, 'host', string_copy(url, 1, colonPos - 1));
-        ds_map_add(map, 'port', real(string_copy(url, colonPos + 1, string_length(url) - colonPos)));
+        ds_map_add(map, 'port', real(string_delete(url, 1, colonPos)));
         return map;
     }
     // There was a slash
     else
     {
         ds_map_add(map, 'host', string_copy(url, 1, colonPos - 1));
-        url = string_copy(url, colonPos + 1, string_length(url) - colonPos);
+        url = string_delete(url, 1, colonPos);
         slashPos = string_pos('/', url);
         ds_map_add(map, 'port', real(string_copy(url, 1, slashPos - 1)));
-        url = string_copy(url, slashPos, string_length(url) - slashPos + 1); 
+        url = string_delete(url, 1, slashPos - 1); 
     }
 }
 
@@ -122,7 +122,7 @@ if (queryPos == 0)
 else
 {
     ds_map_add(map, 'abs_path', string_copy(url, 1, queryPos - 1));
-    ds_map_add(map, 'query', string_copy(url, queryPos + 1, string_length(url) - queryPos));
+    ds_map_add(map, 'query', string_delete(url, 1, queryPos));
     return map;
 }
 

@@ -43,18 +43,16 @@ if (http_step(handle)) {
             popup.msg = ds_list_find_value(data, c + 1);
             break;
         case "Version":
+            var versioncheck, versionend, version, changes;
             versioncheck = ds_list_find_value(data, c + 1);
-            versionend = string_pos("!",versioncheck);
-            version = string_copy(versioncheck,1,versionend-1);
-            changeslength = string_length(versioncheck)-versionend;
-            changes=string_copy(versioncheck,versionend+1,changeslength);
+            versionend = string_pos("!", versioncheck);
+            version = string_copy(versioncheck, 1, versionend-1);
+            changes = string_delete(versioncheck, 1, versionend);
             if(real(version) &gt; VERSION)
-            {
-                var popup;
-                popup = instance_create(250, 471, DevMessagePopup);
-                popup.msg = "Updates have been made to Gang Garrison 2!##"+changes;
-                popup.updating = true;
-            }
+                with instance_create(250, 471, DevMessagePopup) {
+                    self.msg = "Updates have been made to Gang Garrison 2!##"+local.changes;
+                    self.updating = true;
+                }
             break;
         case "Background":
             var text, list, hash, title, url, showVersion;
@@ -62,13 +60,17 @@ if (http_step(handle)) {
             list = ds_list_create();
 
             // split string by |
-            while (string_pos("|", text) != 0)
+            while true
             {
-                ds_list_add(list, string_copy(text,0,string_pos("|",text)-1));
-                text = string_copy(text,string_pos("|",text)+1,string_length(text)-string_pos("|",text));
+                var cut;
+                cut = string_pos("|", text);
+                if (cut &lt;= 0) break;
+                ds_list_add(list, string_copy(text, 1, cut-1));
+                text = string_delete(text, 1, cut);
             }
             ds_list_add(list, text);
 
+            var hash, title, url, showVersion;
             hash = ds_list_find_value(list, 0);
             title = ds_list_find_value(list, 1);
             url = ds_list_find_value(list, 2);
@@ -110,12 +112,12 @@ if (http_step(handle)) {
             else if (hash != global.backgroundHash)
             {
                 // download
-                var downloader;
-                downloader = instance_create(0, 0, BackgroundDownloader);
-                downloader.hash = hash;
-                downloader.title = title;
-                downloader.url = url;
-                downloader.showVersion = showVersion;
+                with instance_create(0, 0, BackgroundDownloader) {
+                    self.hash = local.hash;
+                    self.title = local.title;
+                    self.url = local.url;
+                    self.showVersion = local.showVersion;
+                }
             }
             // current background same as downloaded, updated title/URL/show version flag
             else if (title != global.backgroundTitle

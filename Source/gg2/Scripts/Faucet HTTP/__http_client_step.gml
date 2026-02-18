@@ -60,7 +60,7 @@ with (client)
             if (c == LF and string_char_at(linebuf, string_length(linebuf)) == CR)
             {
                 // Strip trailing CR
-                linebuf = string_copy(linebuf, 1, string_length(linebuf) - 1);
+                linebuf = string_delete(linebuf, string_length(linebuf), 1);
                 // First line - status code
                 if (line == 0)
                 {
@@ -76,8 +76,8 @@ with (client)
                         error = "No space in first line of response";
                         return __http_client_destroy();
                     }
-                    httpVer = string_copy(linebuf, 1, spacePos);
-                    linebuf = string_copy(linebuf, spacePos + 1, string_length(linebuf) - spacePos);
+                    httpVer = string_copy(linebuf, 1, spacePos-1);
+                    linebuf = string_delete(linebuf, 1, spacePos);
     
                     spacePos = string_pos(' ', linebuf);
                     if (spacePos == 0)
@@ -86,8 +86,8 @@ with (client)
                         error = "No second space in first line of response";
                         return __http_client_destroy();
                     }
-                    statusCode = real(string_copy(linebuf, 1, spacePos));
-                    reasonPhrase = string_copy(linebuf, spacePos + 1, string_length(linebuf) - spacePos);
+                    statusCode = real(string_copy(linebuf, 1, spacePos-1));
+                    reasonPhrase = string_delete(linebuf, 1, spacePos);
                 }
                 // Other line
                 else

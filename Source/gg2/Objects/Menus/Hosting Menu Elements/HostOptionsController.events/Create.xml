@@ -34,13 +34,13 @@ bgtabs = true;
 
 menu_addedit_text2("Server Name:", "global.serverName", '
     var newName;
-    newName = string_copy(argument0, 0, 25);
+    newName = string_copy(argument0, 1, 25);
     gg2_write_ini("Server", "ServerName", newName);
     return newName;
 ');
 menu_addedit_text2("Welcome message:", "global.welcomeMessage", '
     var newMessage;
-    newMessage = string_copy(argument0, 0, 255);
+    newMessage = string_copy(argument0, 1, 255);
     gg2_write_ini("Server", "WelcomeMessage", newMessage);
     return newMessage;
 ');

@@ -12,7 +12,7 @@ while (!ds_queue_empty(tokens))
     
     // String
     if (string_char_at(token, 1) == '%')
-        return string_copy(token, 2, string_length(token) - 1);
+        return string_delete(token, 1, 1);
     
     // GGON has only three primitives - it could only be string, opening { or opening [
     if (token != '{' and token != '[')
@@ -42,7 +42,7 @@ while (!ds_queue_empty(tokens))
                 token = ds_queue_dequeue(tokens);
                 
                 var key;
-                key = string_copy(token, 2, string_length(token) - 1);
+                key = string_delete(token, 1, 1);
                 
                 token = ds_queue_dequeue(tokens);
                 

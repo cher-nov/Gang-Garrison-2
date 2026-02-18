@@ -6,7 +6,7 @@ if ((global.mapRotationFile != "") and file_exists(global.mapRotationFile))
     for (i = 1; !file_text_eof(fileHandle); i += 1)
     {
         mapname = trim(file_text_read_string(fileHandle));
-        if (mapname != "" and string_char_at(mapname, 0) != "#") // if it's not blank and it's not a comment (starting with #)
+        if (mapname != "" and string_char_at(mapname, 1) != "#") // if it's not blank and it's not a comment (starting with #)
         {
             ds_list_add(global.map_rotation, mapname);
         }

@@ -163,7 +163,7 @@ do {
             if(global.rewardKey != "" and global.rewardId != "")
             {
                 var rewardId;
-                rewardId = string_copy(global.rewardId, 0, 255);
+                rewardId = string_copy(global.rewardId, 1, 255);
                 write_ubyte(global.serverSocket, REWARD_REQUEST);
                 writePrefixedString1(global.serverSocket, rewardId);
             }

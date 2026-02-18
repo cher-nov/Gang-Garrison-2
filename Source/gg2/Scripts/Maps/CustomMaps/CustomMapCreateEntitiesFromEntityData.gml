@@ -2,7 +2,7 @@
 // argument0: entity data
 
 var firstChar;
-firstChar = string_copy(argument0, 1, 1);
+firstChar = string_char_at(argument0, 1);
 
 // It begins with a { or [ so it's a GGON map or list
 if (firstChar == "{" or firstChar == "[")

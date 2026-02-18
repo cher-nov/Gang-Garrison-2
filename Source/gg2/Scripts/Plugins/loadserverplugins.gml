@@ -16,9 +16,11 @@ list = split(argument0, ',');
 // Split hashes from plugin names
 for (i = 0; i < ds_list_size(list); i += 1)
 {
+    var cut;
     text = ds_list_find_value(list, i);
-    pluginname = string_copy(text, 0, string_pos("@", text) - 1);
-    pluginhash = string_copy(text, string_pos("@", text) + 1, string_length(text) - string_pos("@", text));
+    cut = string_pos("@", text);
+    pluginname = string_copy(text, 1, cut-1);
+    pluginhash = string_delete(text, 1, cut);
     ds_list_replace(list, i, pluginname);
     ds_list_add(hashList, pluginhash);
 }

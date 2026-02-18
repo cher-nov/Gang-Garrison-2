@@ -17,10 +17,14 @@ var list, count;
 list = ds_list_create();
 count = 0;
 
-while (string_pos(delimiter, text) != 0)
+while true
 {
-    ds_list_add(list, string_copy(text, 1, string_pos(delimiter,text) - 1));
-    text = string_copy(text, string_pos(delimiter, text) + string_length(delimiter), string_length(text) - string_pos(delimiter, text));
+    var cut;
+    cut = string_pos(delimiter, text);
+    if (cut <= 0) break;
+
+    ds_list_add(list, string_copy(text, 1, cut - 1));
+    text = string_delete(text, 1, cut - 1 + string_length(delimiter));
 
     count += 1;
     if (limit and count == limit)

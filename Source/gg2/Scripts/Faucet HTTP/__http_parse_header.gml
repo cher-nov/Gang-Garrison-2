@@ -36,7 +36,7 @@ if ((string_char_at(linebuf, 1) == ' ' or ord(string_char_at(linebuf, 1)) == 9))
         return false;
     }
     headerValue = ds_map_find_value(responseHeaders, string_lower(headerName))
-        + string_copy(linebuf, 2, string_length(linebuf) - 1);
+        + string_delete(linebuf, 1, 1);
 }
 // "Each header field consists
 // of a name followed by a colon (":") and the field value. Field names
@@ -53,14 +53,14 @@ else
         return false;
     }
     headerName = string_copy(linebuf, 1, colonPos - 1);
-    headerValue = string_copy(linebuf, colonPos + 1, string_length(linebuf) - colonPos);
+    headerValue = string_delete(linebuf, 1, colonPos);
     // "The field-content does not include any leading or trailing LWS:
     // linear white space occurring before the first non-whitespace
     // character of the field-value or after the last non-whitespace
     // character of the field-value. Such leading or trailing LWS MAY be
     // removed without changing the semantics of the field value."
     while (string_char_at(headerValue, 1) == ' ' or ord(string_char_at(headerValue, 1)) == 9)
-        headerValue = string_copy(headerValue, 2, string_length(headerValue) - 1);
+        headerValue = string_delete(headerValue, 1, 1);
 }
 
 ds_map_add(responseHeaders, string_lower(headerName), headerValue);
